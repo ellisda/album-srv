@@ -1,0 +1,2 @@
+## DotNet Core WebAPI
+ The initial project structure was created with cmd line `dotnet new webapi -o AlbumServer`
