@@ -1,2 +1,16 @@
 ## DotNet Core WebAPI
  The initial project structure was created with cmd line `dotnet new webapi -o AlbumServer`
+
+
+## Resource Naming
+
+We are to provide CRUD routes for albums, which implies that they have resource IDs. We'll use a composite key in the form of query params.
+
+In a production system, we'd expect to have a GUID or some other ID assigned to each Album.
+
+For example (a query that selects a Queen album named Jazz):
+    GET /albums?artist=Queen&album=Jazz
+
+
+PUT will need to be idempotent
+    PUT /albums

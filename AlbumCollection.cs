@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace AlbumServer
 {
@@ -12,7 +13,7 @@ namespace AlbumServer
         public string Year {get; set;}
     }
 
-    public class AlbumCollection : List<Album>
+    public class AlbumCollection : ConcurrentBag<Album>
     {
         private static AlbumCollection _default;
         public static AlbumCollection Default() {
@@ -32,6 +33,8 @@ namespace AlbumServer
             {
 //                Console.WriteLine(line);
                 var fields = line.Split(',');
+                if(fields.Length >= 1 && fields[0] == "album")
+                    continue;
                 //Console.WriteLine($"{fields.Length} - {fields[0]}");
                 var album = new Album{
                     Name = fields[0],
