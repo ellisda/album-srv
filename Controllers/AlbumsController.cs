@@ -73,10 +73,8 @@ namespace AlbumServer.Controllers
         public IActionResult Delete(int albumID)
         {
             var albums = AlbumCollection.Default();
-            if(!albums.ContainsKey(albumID))
-                return new BadRequestResult();
-            
-            albums.Remove(albumID, out Album a);
+            if(albums.ContainsKey(albumID))
+                albums.Remove(albumID, out Album a);
             return new OkResult();
         }
     }
