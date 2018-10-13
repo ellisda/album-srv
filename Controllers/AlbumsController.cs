@@ -17,6 +17,14 @@ namespace AlbumServer.Controllers
             return AlbumCollection.Default();
         }
 
+        [HttpGet("genres")]
+        public ActionResult<IEnumerable<IGrouping<string, Album>>> GetGenreRankings()
+        {
+            var albums = AlbumCollection.Default();
+            var g = albums.GroupBy(a => a.Genre);
+            return new ActionResult<IEnumerable<IGrouping<string, Album>>>(g);
+        }
+
         // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<Album> Get(int id)
