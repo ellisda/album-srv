@@ -32,21 +32,6 @@ namespace AlbumServer.Controllers
         //     return AlbumCollection.Default();
         // }
 
-        [HttpGet("genres")]
-        public ActionResult<IEnumerable<IGrouping<string, Album>>> GetGenreRankings()
-        {
-            var albums = AlbumCollection.Default();
-            var g = albums.GroupBy(a => a.Genre).OrderByDescending(gr => gr.Count()); // .ToDictionary(g => g.Key);
-
-            IGrouping<string, Album> res = null;
-            // res = AlbumCollection.Default().GroupBy(a => a.Genre);
-
-
-            //TODO: Think about Return type, we need something with metadata
-            //ex: Genre : { Number int, Albums []albums }
-            return new ActionResult<IEnumerable<IGrouping<string, Album>>>(g);
-        }
-
         // GET Albums for a given artist, case sensitive
         [HttpGet("artists/{artistName}")]
         public ActionResult<IEnumerable<Album>> Get(string artistName)

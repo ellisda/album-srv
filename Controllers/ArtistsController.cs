@@ -14,7 +14,7 @@ namespace AlbumServer.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            var artists = AlbumCollection.Default().GroupBy(a => a.Artist).Select(g => g.Key);
+            var artists = AlbumCollection.Default().Values.GroupBy(a => a.Artist).Select(g => g.Key);
             return new ActionResult<IEnumerable<string>>(artists);
         }
 
@@ -22,7 +22,7 @@ namespace AlbumServer.Controllers
         [HttpGet("{artistName}")]
         public ActionResult<IEnumerable<Album>> Get(string artistName)
         {
-            var albums = AlbumCollection.Default();
+            var albums = AlbumCollection.Default().Values;
             var matches = albums.Where(a => a.Artist == artistName);
             return new ActionResult<IEnumerable<Album>>(matches);
         }
