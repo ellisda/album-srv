@@ -10,36 +10,6 @@ namespace AlbumServer.Controllers
     [ApiController]
     public class AlbumsController : ControllerBase
     {
-        //GET /Queen/Jazz returns `{"name":"Jazz","artist":"Queen","genre":"Rock","year":"1978"}`
-        [HttpGet()]//"{artistName}/{albumName}")]
-        public ActionResult<Album> Get([FromQuery(Name = "artist")] string artistName, [FromQuery(Name = "album")] string albumName)
-        {
-            var albums = AlbumCollection.Default();
-            if (artistName != null || albumName != null)
-                return albums.Where(a =>
-                (artistName == null || a.Artist == artistName)
-                 && (albumName == null || a.Name == albumName)
-                 ).FirstOrDefault();
-            else
-                return albums.FirstOrDefault();
-        }
-
-
-        // //GET api/values
-        // [HttpGet]
-        // public ActionResult<IEnumerable<Album>> Get()
-        // {
-        //     return AlbumCollection.Default();
-        // }
-
-        // GET Albums for a given artist, case sensitive
-        [HttpGet("artists/{artistName}")]
-        public ActionResult<IEnumerable<Album>> Get(string artistName)
-        {
-            var match = AlbumCollection.Default().Values.Where(a => a.Artist == artistName);
-            return new ActionResult<IEnumerable<Album>>(match);
-        }
-
         [HttpGet("{albumID}")]
         public ActionResult<Album> GetAlbum(int albumID)
         {
