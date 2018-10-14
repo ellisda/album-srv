@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Threading;
+using Microsoft.Extensions.Configuration;
 
 namespace AlbumServer
 {
@@ -20,19 +21,28 @@ namespace AlbumServer
         private int _numRecords;
         private static AlbumCollection _default;
         public static AlbumCollection Default() {
-            return (_default ?? (_default = new AlbumCollection()));
+            return (_default ?? (_default = new AlbumCollection("/Users/ellda09/Downloads/albums.csv")));
         }
 
         //C'tor for the Dependency Injection
-        public AlbumCollection()
+        public AlbumCollection(IConfiguration config)
         {
+            var myStringValue = config["MyStringKey"];
             var fileName = "/Users/ellda09/Downloads/albums.csv";
             TextReader reader = new StreamReader(fileName);
             LoadRecords(reader);
         }
 
+        private AlbumCollection(string fileName) {
+            if(fileName != null)
+            {
+                TextReader reader = new StreamReader(fileName);
+                LoadRecords(reader);
+            }
+        }
+
         public static AlbumCollection LoadFromFile(string filename) {
-            var albums = new AlbumCollection();
+            var albums = new AlbumCollection("/Users/ellda09/Downloads/albums.csv");
             TextReader reader = new StreamReader(filename);
             albums.LoadRecords(reader);
             return albums;
