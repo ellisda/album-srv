@@ -20,17 +20,25 @@ namespace AlbumServer
         private int _numRecords;
         private static AlbumCollection _default;
         public static AlbumCollection Default() {
-            return (_default ?? (_default = LoadFromFile("/Users/ellda09/Downloads/albums.csv")));
+            return (_default ?? (_default = new AlbumCollection()));
+        }
+
+        //C'tor for the Dependency Injection
+        public AlbumCollection()
+        {
+            var fileName = "/Users/ellda09/Downloads/albums.csv";
+            TextReader reader = new StreamReader(fileName);
+            LoadRecords(reader);
         }
 
         public static AlbumCollection LoadFromFile(string filename) {
+            var albums = new AlbumCollection();
             TextReader reader = new StreamReader(filename);
-            return GetRecords(reader);
-
+            albums.LoadRecords(reader);
+            return albums;
         }
 
-        static AlbumCollection GetRecords(TextReader r) {
-            var albums = new AlbumCollection();
+        public void LoadRecords(TextReader r) {
             string line;
             while(null != (line = r.ReadLine()))
             {
@@ -40,7 +48,7 @@ namespace AlbumServer
                     continue;
                 //Console.WriteLine($"{fields.Length} - {fields[0]}");
 
-                albums.AddNewRecord(new Album{
+                AddNewRecord(new Album{
                         Name = fields[0],
                         Artist = fields[1],
                         Genre = fields[2],
@@ -49,7 +57,6 @@ namespace AlbumServer
                     
 //                Console.WriteLine($"album: {album.album}");
             }
-            return albums;
         }
 
         public void AddNewRecord(Album album)

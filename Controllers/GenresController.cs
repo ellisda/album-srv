@@ -9,11 +9,18 @@ namespace AlbumServer.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class GenresController : ControllerBase
-    {
+    {   
+        private AlbumCollection _albums;
+
+        public GenresController(AlbumCollection albums)
+        {
+            _albums = albums;
+        }
+
         [HttpGet()]
         public ActionResult<IEnumerable<IGrouping<string, Album>>> GetGenreRankings()
         {
-            var albums = AlbumCollection.Default().Values;
+            var albums = _albums.Values;
             var g = albums.GroupBy(a => a.Genre).OrderByDescending(gr => gr.Count());
 
             //TODO: Think about Return type, we need something with metadata
