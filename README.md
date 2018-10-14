@@ -1,30 +1,31 @@
 ## To Build
+    dotnet build
 
-
-## To run
+## To Run
     dotnet run --project AlbumServer/AlbumServer.csproj
+
+From here you can use Postman or `curl -k https://localhost:5001/api/albums/2` to interact with the API.
 
 ## To Test
     dotnet test test/test.csproj
 
 ## DotNet Core WebAPI
- The initial project structure was created with cmd line `dotnet new webapi -o AlbumServer`
+This project is built with dotnet Core 2.1.403 (see `dotnet --version` for your local version) and uses the ASP.Net Core "Web API" framework.
 
+Some Web API References:
 
-## Resource Naming
+ - [Create a Web API with ASP.NET Core and Visual Studio Code](https://docs.microsoft.com/en-us/aspnet/core/tutorials/web-api-vsc?view=aspnetcore-2.1)
+ - [Build web APIs with ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-2.1)
+ - [Kestrel web server implementation in ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel?view=aspnetcore-2.1)
 
-We are to provide CRUD routes for albums, which implies that they have resource IDs. We'll use a composite key in the form of query params.
+The initial project structure was created with cmd line `dotnet new webapi -o AlbumServer` and the test project was created with `dotnet new mstest`.
 
-In a production system, we'd expect to have a GUID or some other ID assigned to each Album.
+## Resource Identifiers
 
-For example (a query that selects a Queen album named Jazz):
+We are to provide CRUD routes for albums, which implies that they have resource IDs. Though it is tempting to think of Albums as having a composite key based on unique artist name and album names, it doesn't lend itself to idomatic REST resource paths.
+
+I assign numeric album identifiers in the backend and access them via GET `/albums/{id}` (we could also consider using GUID strings as IDs).
+
+Other things I considered but didn't build:
+
     GET /albums?artist=Queen&album=Jazz
-
-
-PUT will need to be idempotent
-    PUT /albums
-
-
-
-
-ALT - Just assign a numeric ID to each album as it is added to the system and return those IDs
