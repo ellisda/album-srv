@@ -29,3 +29,8 @@ I assign numeric album identifiers in the backend and access them via GET `/albu
 Other things I considered but didn't build:
 
     GET /albums?artist=Queen&album=Jazz
+
+## DESIGN REVIEW
+
+Were this a production application, we'd be using some kind of R/W database provider. For the sake of this exercise, we load albums into an in-memory ConcurrentDictionary, using hard-coded path to a .csv file. ASP.Net Core has deep support for [dependency injection](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-2.1) where services and data providers can be register at server startup injected into the Controllers via parameterized constructors. I dabbled with this, but I'm not very familiar with the myriad options available in ASP.Net Core. Moving this work forward would depend on the kind of database used, so I stopped. 
+ 
