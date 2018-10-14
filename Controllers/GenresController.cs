@@ -10,12 +10,8 @@ namespace AlbumServer.Controllers
     [ApiController]
     public class GenresController : ControllerBase
     {   
-        private AlbumCollection _albums;
-
-        public GenresController(AlbumCollection albums)
-        {
-            _albums = albums;
-        }
+        //TODO: Replace this singleton with a DI-based IConfiguration c'tor
+        private static AlbumCollection _albums = AlbumCollection.Default();
 
         [HttpGet()]
         public ActionResult<IEnumerable<IGrouping<string, Album>>> GetGenreRankings()

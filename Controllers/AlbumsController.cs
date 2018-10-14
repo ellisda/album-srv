@@ -10,20 +10,22 @@ namespace AlbumServer.Controllers
     [ApiController]
     public class AlbumsController : ControllerBase
     {
+        //TODO: Replace this singleton with a DI-based IConfiguration c'tor
+        private static AlbumCollection _albums = AlbumCollection.Default();
+
         [HttpGet("{albumID}")]
         public ActionResult<Album> GetAlbum(int albumID)
         {
-             var albums = AlbumCollection.Default();
-            if(!albums.ContainsKey(albumID))
+            if(!_albums.ContainsKey(albumID))
                 return new BadRequestResult();
-            return albums[albumID];
+            return _albums[albumID];
         }
 
         // POST api/values
         [HttpPost]
         public void Post([FromBody] Album a)
         {
-            AlbumCollection.Default().AddNewRecord(a);
+            _albums.AddNewRecord(a);
         }
 
         // PUT api/albums/5
@@ -34,7 +36,7 @@ namespace AlbumServer.Controllers
                 return new BadRequestObjectResult("supplied path param does not match albumID in payload");
             }
             //NOTE: This might no
-            AlbumCollection.Default()[albumID] = a;
+            _albums[albumID] = a;
             return a;
         }
 
@@ -42,9 +44,8 @@ namespace AlbumServer.Controllers
         [HttpDelete("{albumID}")]
         public IActionResult Delete(int albumID)
         {
-            var albums = AlbumCollection.Default();
-            if(albums.ContainsKey(albumID))
-                albums.Remove(albumID, out Album a);
+            if(_albums.ContainsKey(albumID))
+                _albums.Remove(albumID, out Album a);
             return new OkResult();
         }
     }

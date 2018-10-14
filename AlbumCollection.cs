@@ -20,31 +20,15 @@ namespace AlbumServer
     {
         private int _numRecords;
         private static AlbumCollection _default;
-        public static AlbumCollection Default() {
-            return (_default ?? (_default = new AlbumCollection("/Users/ellda09/Downloads/albums.csv")));
-        }
+        public static AlbumCollection Default() => _default ?? (_default = new AlbumCollection(null));
 
-        //C'tor for the Dependency Injection
-        public AlbumCollection(IConfiguration config)
+        public static void InitializeFromFile(string fileName)
         {
-            var myStringValue = config["MyStringKey"];
-            var fileName = "/Users/ellda09/Downloads/albums.csv";
-            TextReader reader = new StreamReader(fileName);
-            LoadRecords(reader);
-        }
-
-        private AlbumCollection(string fileName) {
-            if(fileName != null)
-            {
-                TextReader reader = new StreamReader(fileName);
-                LoadRecords(reader);
-            }
+            _default = new AlbumCollection(fileName);
         }
 
         public static AlbumCollection LoadFromFile(string filename) {
-            var albums = new AlbumCollection("/Users/ellda09/Downloads/albums.csv");
-            TextReader reader = new StreamReader(filename);
-            albums.LoadRecords(reader);
+            var albums = new AlbumCollection(filename);
             return albums;
         }
 
@@ -74,6 +58,14 @@ namespace AlbumServer
             var albumID = Interlocked.Increment(ref _numRecords) - 1;
             album.AlbumID = albumID;
             this[albumID] = album;
+        }
+
+        private AlbumCollection(string fileName) {
+            if(fileName != null && File.Exists(fileName))
+            {
+                TextReader reader = new StreamReader(fileName);
+                LoadRecords(reader);
+            }
         }
     }
 }

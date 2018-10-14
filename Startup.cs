@@ -26,8 +26,12 @@ namespace AlbumServer
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddScoped<AlbumCollection>();
+            AlbumCollection.InitializeFromFile("/Users/ellda09/Downloads/albums.csv");
+            // services.AddScoped<AlbumCollection>();
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

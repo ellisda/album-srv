@@ -10,11 +10,14 @@ namespace AlbumServer.Controllers
     [ApiController]
     public class ArtistsController : ControllerBase
     {
+        //TODO: Replace this singleton with a DI-based IConfiguration c'tor
+        private static AlbumCollection _albums = AlbumCollection.Default();
+
         //GET /artists returns the names of Artists
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            var artists = AlbumCollection.Default().Values.GroupBy(a => a.Artist).Select(g => g.Key);
+            var artists = _albums.Values.GroupBy(a => a.Artist).Select(g => g.Key);
             return new ActionResult<IEnumerable<string>>(artists);
         }
 
@@ -22,10 +25,8 @@ namespace AlbumServer.Controllers
         [HttpGet("{artistName}")]
         public ActionResult<IEnumerable<Album>> Get(string artistName)
         {
-            var albums = AlbumCollection.Default().Values;
-            var matches = albums.Where(a => a.Artist == artistName);
+            var matches = _albums.Values.Where(a => a.Artist == artistName);
             return new ActionResult<IEnumerable<Album>>(matches);
         }
-
     }
 }

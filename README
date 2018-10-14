@@ -13,4 +13,9 @@ For example (a query that selects a Queen album named Jazz):
 
 
 PUT will need to be idempotent
-    PUT /albumsALT - Just assign a numeric ID to each album as it is added to the system and return those IDs
+    PUT /albums
+
+
+
+
+ALT - Just assign a numeric ID to each album as it is added to the system and return those IDs
