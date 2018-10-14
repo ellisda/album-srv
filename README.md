@@ -12,6 +12,8 @@ From here you can use Postman or `curl -k https://localhost:5001/api/albums/2` t
 ## DotNet Core WebAPI
 This project is built with dotnet Core 2.1.403 (see `dotnet --version` for your local version) and uses the ASP.Net Core "Web API" framework.
 
+NOTE: This was developed on MacOS, but I've confirmed it runs on Windows 10 as well.
+
 Some Web API References:
 
  - [Create a Web API with ASP.NET Core and Visual Studio Code](https://docs.microsoft.com/en-us/aspnet/core/tutorials/web-api-vsc?view=aspnetcore-2.1)
