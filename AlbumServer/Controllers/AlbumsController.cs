@@ -10,7 +10,6 @@ namespace AlbumServer.Controllers
     [ApiController]
     public class AlbumsController : ControllerBase
     {
-        //TODO: Replace this singleton with a DI-based IConfiguration c'tor
         private static AlbumCollection _albums = AlbumCollection.Default();
 
         [HttpGet("{albumID}")]
