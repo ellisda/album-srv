@@ -10,7 +10,12 @@ namespace AlbumServer.Controllers
     [ApiController]
     public class AlbumsController : ControllerBase
     {
-        private static AlbumCollection _albums = AlbumCollection.Default();
+        private AlbumCollection _albums;
+
+        public AlbumsController(AlbumCollection albums = null)
+        {
+            _albums = albums ?? AlbumCollection.Default();
+        }
 
         [HttpGet("{albumID}")]
         public ActionResult<Album> GetAlbum(int albumID)

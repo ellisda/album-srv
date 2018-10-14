@@ -11,7 +11,13 @@ namespace AlbumServer.Controllers
     public class ArtistsController : ControllerBase
     {
         //TODO: Replace this singleton with a DI-based IConfiguration c'tor
-        private static AlbumCollection _albums = AlbumCollection.Default();
+        private AlbumCollection _albums;
+
+        public ArtistsController(AlbumCollection albums = null)
+        {
+            _albums = albums ?? AlbumCollection.Default();
+        }
+
 
         //GET /artists returns the names of Artists
         [HttpGet]
