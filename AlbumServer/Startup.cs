@@ -26,7 +26,7 @@ namespace AlbumServer
         public void ConfigureServices(IServiceCollection services)
         {
 
-            AlbumCollection.InitializeFromFile("/Users/ellda09/Downloads/albums.csv");
+            AlbumCollection.InitializeFromFile("../albums.csv");
             // services.AddScoped<AlbumCollection>();
 
 
